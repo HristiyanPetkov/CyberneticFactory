@@ -1,4 +1,4 @@
-package com.example.cyberneticfactory.Entity;
+package com.example.cyberneticfactory.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
