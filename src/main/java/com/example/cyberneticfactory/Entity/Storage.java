@@ -16,6 +16,10 @@ public class Storage {
     private int capacity;
     private int used;
 
-    @ManyToMany(mappedBy = "storage")
+    @ManyToMany
+    @JoinTable(
+            name = "storage_material",
+            joinColumns = @JoinColumn(name = "storage_id"),
+            inverseJoinColumns = @JoinColumn(name = "material_id"))
     private List<Material> materials;
 }
