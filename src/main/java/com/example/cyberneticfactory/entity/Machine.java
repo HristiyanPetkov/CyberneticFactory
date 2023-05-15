@@ -1,22 +1,21 @@
-package com.example.cyberneticfactory.Entity;
+package com.example.cyberneticfactory.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
-
-import java.util.List;
 
 @Entity
 @Data
-public class Order {
+public class Machine {
     @Id
     @GeneratedValue
     private Long id;
 
     private String name;
+    private int production_rate;
 
-    @OneToMany(mappedBy = "order")
-    private List<Part> parts;
+    @ManyToOne
+    private Part part;
 }

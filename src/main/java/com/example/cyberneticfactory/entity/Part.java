@@ -1,4 +1,4 @@
-package com.example.cyberneticfactory.Entity;
+package com.example.cyberneticfactory.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,6 +20,6 @@ public class Part {
     @OneToMany(mappedBy = "part")
     private List<Machine> machines;
 
-    @ManyToOne
-    private Order order;
+    @ManyToMany(mappedBy = "parts")
+    private List<Package> packages;
 }

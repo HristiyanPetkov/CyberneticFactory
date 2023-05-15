@@ -1,6 +1,6 @@
-package com.example.cyberneticfactory.Repository;
+package com.example.cyberneticfactory.repository;
 
-import com.example.cyberneticfactory.Entity.Storage;
+import com.example.cyberneticfactory.entity.Storage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
