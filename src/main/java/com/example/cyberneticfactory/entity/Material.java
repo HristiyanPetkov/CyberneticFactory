@@ -16,4 +16,7 @@ public class Material {
 
     @ManyToMany(mappedBy = "materials")
     private List<Storage> storages;
+
+    @ManyToMany(mappedBy = "materials")
+    private List<Part> part;
 }

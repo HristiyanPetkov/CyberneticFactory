@@ -11,13 +11,15 @@ public class ProductionLine {
     @Id
     @GeneratedValue
     private Long id;
-
     private String name;
     private int production_rate;
 
-    @ManyToOne
-    private Part part;
-
     @OneToMany(mappedBy = "productionLine")
     private List<Worker> workers;
+
+    @OneToMany(mappedBy = "productionLine")
+    private List<Machine> machines;
+
+    @OneToOne(mappedBy = "productionLine")
+    private Product product;
 }

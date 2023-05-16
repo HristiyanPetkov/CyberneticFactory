@@ -13,13 +13,15 @@ public class Part {
     private Long id;
 
     private String name;
-    private int price;
     private String type;
-    private String description;
+
+    @ManyToMany
+    @JoinTable(
+            name = "part_material",
+            joinColumns = @JoinColumn(name = "part_id"),
+            inverseJoinColumns = @JoinColumn(name = "material_id"))
+    private List<Material> materials;
 
     @OneToMany(mappedBy = "part")
     private List<Machine> machines;
-
-    @ManyToMany(mappedBy = "parts")
-    private List<Package> packages;
 }

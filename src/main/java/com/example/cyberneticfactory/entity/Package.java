@@ -19,8 +19,8 @@ public class Package {
 
     @ManyToMany
     @JoinTable(
-            name = "package_part",
+            name = "package_product",
             joinColumns = @JoinColumn(name = "package_id"),
-            inverseJoinColumns = @JoinColumn(name = "part_id"))
-    private List<Part> parts;
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products;
 }

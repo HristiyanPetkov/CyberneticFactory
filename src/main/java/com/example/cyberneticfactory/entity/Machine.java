@@ -18,4 +18,7 @@ public class Machine {
 
     @ManyToOne
     private Part part;
+
+    @ManyToOne
+    private ProductionLine productionLine;
 }
