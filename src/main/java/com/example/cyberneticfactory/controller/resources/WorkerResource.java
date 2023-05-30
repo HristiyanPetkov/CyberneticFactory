@@ -1,5 +1,8 @@
 package com.example.cyberneticfactory.controller.resources;
 
+import lombok.Data;
+
+@Data
 public class WorkerResource {
     private Long id;
     private String name;

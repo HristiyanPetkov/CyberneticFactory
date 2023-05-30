@@ -8,6 +8,6 @@ import java.util.List;
 public class MaterialResource {
     private Long id;
     private String type;
-    private List<String> storages;
-    private List<String> part;
+    private List<StorageResource> storages;
+    private List<PartResource> part;
 }
