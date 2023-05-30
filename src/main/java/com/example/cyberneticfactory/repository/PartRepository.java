@@ -4,6 +4,13 @@ import com.example.cyberneticfactory.entity.Part;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PartRepository extends JpaRepository<Part, Long> {
+    Part getReferenceByName(String part);
+
+    List<Part> findAllByMaterials_Id(Long id);
+
+    Part findByMachines_Id(Long id);
 }

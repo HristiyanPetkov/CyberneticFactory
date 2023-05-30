@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface MachineMapper {
-    MachineMapper MAPPER = Mappers.getMapper(MachineMapper.class);
+    MachineMapper MACHINE_MAPPER = Mappers.getMapper(MachineMapper.class);
 
     @Mapping(target = "productionLine.name", source = "machineResource.productionLine")
     @Mapping(target = "part.name", source = "machineResource.part")

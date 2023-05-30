@@ -9,5 +9,5 @@ public class MaterialResource {
     private Long id;
     private String type;
     private List<StorageResource> storages;
-    private List<PartResource> part;
+    private List<PartResource> parts;
 }

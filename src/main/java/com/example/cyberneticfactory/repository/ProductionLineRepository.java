@@ -6,4 +6,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductionLineRepository extends JpaRepository<ProductionLine, Long> {
+    ProductionLine getReferenceByName(String productionLine);
+
+    ProductionLine findByProductId(Long id);
+
+    ProductionLine findByWorkers_Id(long id);
+
+    ProductionLine findByMachines_Id(Long id);
 }

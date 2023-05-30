@@ -18,5 +18,5 @@ public class Material {
     private List<Storage> storages;
 
     @ManyToMany(mappedBy = "materials")
-    private List<Part> part;
+    private List<Part> parts;
 }

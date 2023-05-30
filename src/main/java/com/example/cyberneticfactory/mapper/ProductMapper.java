@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(uses = {PackageMapper.class})
 public interface ProductMapper {
 
-    ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
+    ProductMapper PRODUCT_MAPPER = Mappers.getMapper(ProductMapper.class);
 
     @Mapping(target = "productionLine.name", source = "productResource.productionLine")
     Product fromProductResource(ProductResource productResource);

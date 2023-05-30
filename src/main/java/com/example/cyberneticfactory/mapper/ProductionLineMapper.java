@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(uses = {MachineMapper.class, WorkerMapper.class})
 public interface ProductionLineMapper {
 
-    ProductionLineMapper MAPPER = Mappers.getMapper(ProductionLineMapper.class);
+    ProductionLineMapper PRODUCTION_LINE_MAPPER = Mappers.getMapper(ProductionLineMapper.class);
 
     @Mapping(target = "product.name", source = "product")
     ProductionLine fromProductionLineResource(ProductionLineResource productionLineResource);

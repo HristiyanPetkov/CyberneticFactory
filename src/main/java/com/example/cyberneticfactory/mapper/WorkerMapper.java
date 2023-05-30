@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface WorkerMapper {
 
-    WorkerMapper MAPPER = Mappers.getMapper(WorkerMapper.class);
+    WorkerMapper WORKER_MAPPER = Mappers.getMapper(WorkerMapper.class);
 
     @Mapping(target = "productionLine.name", source = "workerResource.productionLine")
     Worker fromWorkerResource(WorkerResource workerResource);
