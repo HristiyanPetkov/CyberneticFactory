@@ -16,8 +16,8 @@ import static com.example.cyberneticfactory.mapper.PackageMapper.PACKAGE_MAPPER;
 @Service
 @RequiredArgsConstructor
 public class PackageServiceImpl implements PackageService {
-    PackageRepository packageRepository;
-    ProductRepository productRepository;
+    private final PackageRepository packageRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public List<PackageResource> getAll() {

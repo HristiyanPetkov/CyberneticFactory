@@ -8,6 +8,7 @@ import com.example.cyberneticfactory.repository.PackageRepository;
 import com.example.cyberneticfactory.repository.ProductRepository;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
 import com.example.cyberneticfactory.service.ProductService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,9 @@ import static com.example.cyberneticfactory.mapper.ProductMapper.PRODUCT_MAPPER;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    ProductRepository productRepository;
-    PackageRepository packageRepository;
-    ProductionLineRepository productionLineRepository;
+    private final ProductRepository productRepository;
+    private final PackageRepository packageRepository;
+    private final ProductionLineRepository productionLineRepository;
 
     @Override
     public List<ProductResource> getAll() {
@@ -36,7 +37,14 @@ public class ProductServiceImpl implements ProductService {
     public ProductResource save(ProductResource product) {
         Product productToSave = PRODUCT_MAPPER.fromProductResource(product);
         productToSave.setPackages(null);
-        productToSave.setProductionLine(productionLineRepository.getReferenceByName(product.getProductionLine()));
+
+        productionLineRepository.getProductionLineByName(productToSave.getProductionLine().getName())
+                .ifPresentOrElse(
+                        productToSave::setProductionLine,
+                        () -> {
+                            throw new EntityNotFoundException("Production line not found");
+                        }
+                );
 
         return PRODUCT_MAPPER.toProductResource(productRepository.save(productToSave));
     }

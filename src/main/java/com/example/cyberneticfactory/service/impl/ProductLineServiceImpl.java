@@ -20,10 +20,10 @@ import static com.example.cyberneticfactory.mapper.ProductionLineMapper.PRODUCTI
 @Service
 @RequiredArgsConstructor
 public class ProductLineServiceImpl implements ProductionLineService {
-    ProductionLineRepository productionLineRepository;
-    WorkerRepository workerRepository;
-    MachineRepository machineRepository;
-    ProductRepository productRepository;
+    private final ProductionLineRepository productionLineRepository;
+    private final WorkerRepository workerRepository;
+    private final MachineRepository machineRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public List<ProductionLineResource> getAll() {

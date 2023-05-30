@@ -8,6 +8,7 @@ import com.example.cyberneticfactory.repository.MachineRepository;
 import com.example.cyberneticfactory.repository.PartRepository;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
 import com.example.cyberneticfactory.service.MachineService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,21 @@ public class MachineServiceImpl implements MachineService {
     @Override
     public MachineResource save(MachineResource machineResource) {
         Machine machineToSave = MACHINE_MAPPER.fromMachineResource(machineResource);
-        machineToSave.setPart(partRepository.getReferenceByName(machineResource.getPart()));
-        machineToSave.setProductionLine(productionLineRepository.getReferenceByName(machineResource.getProductionLine()));
+        partRepository.getPartsByName(machineToSave.getPart().getName())
+                .ifPresentOrElse(
+                    machineToSave::setPart,
+                    () -> {
+                        throw new EntityNotFoundException("Part not found");
+                    }
+                );
+
+        productionLineRepository.getProductionLineByName(machineResource.getProductionLine())
+                .ifPresentOrElse(
+                    machineToSave::setProductionLine,
+                    () -> {
+                        throw new EntityNotFoundException("Production line not found");
+                    }
+                );
 
         return MACHINE_MAPPER.toMachineResource(machineRepository.save(machineToSave));
     }

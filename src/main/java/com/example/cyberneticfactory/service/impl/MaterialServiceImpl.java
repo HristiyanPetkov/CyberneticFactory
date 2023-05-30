@@ -18,9 +18,9 @@ import static com.example.cyberneticfactory.mapper.MaterialMapper.MATERIAL_MAPPE
 @Service
 @RequiredArgsConstructor
 public class MaterialServiceImpl implements MaterialService {
-    MaterialRepository materialRepository;
-    StorageRepository storageRepository;
-    PartRepository partRepository;
+    private final MaterialRepository materialRepository;
+    private final StorageRepository storageRepository;
+    private final PartRepository partRepository;
 
     @Override
     public List<MaterialResource> getAll() {

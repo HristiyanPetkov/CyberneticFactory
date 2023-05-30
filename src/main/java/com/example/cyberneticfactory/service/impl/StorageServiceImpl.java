@@ -16,8 +16,8 @@ import static com.example.cyberneticfactory.mapper.StorageMapper.STORAGE_MAPPER;
 @Service
 @RequiredArgsConstructor
 public class StorageServiceImpl implements StorageService {
-    StorageRepository storageRepository;
-    MaterialRepository materialRepository;
+    private final StorageRepository storageRepository;
+    private final MaterialRepository materialRepository;
 
     @Override
     public List<StorageResource> getAll() {

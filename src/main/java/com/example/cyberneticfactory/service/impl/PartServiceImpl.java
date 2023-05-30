@@ -18,9 +18,9 @@ import static com.example.cyberneticfactory.mapper.PartMapper.PART_MAPPER;
 @Service
 @RequiredArgsConstructor
 public class PartServiceImpl implements PartService {
-    PartRepository partRepository;
-    MaterialRepository materialRepository;
-    MachineRepository machineRepository;
+    private final PartRepository partRepository;
+    private final MaterialRepository materialRepository;
+    private final MachineRepository machineRepository;
 
     @Override
     public List<PartResource> getAll() {
@@ -37,6 +37,8 @@ public class PartServiceImpl implements PartService {
         Part partToSave = PART_MAPPER.fromPartResource(part);
         partToSave.setName(part.getName());
         partToSave.setType(part.getType());
+        partToSave.setMachines(null);
+        partToSave.setMaterials(null);
 
         return PART_MAPPER.toPartResource(partRepository.save(partToSave));
     }

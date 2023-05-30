@@ -16,8 +16,8 @@ import static com.example.cyberneticfactory.mapper.WorkerMapper.WORKER_MAPPER;
 @Service
 @RequiredArgsConstructor
 public class WorkerServiceImpl implements WorkerService {
-    WorkerRepository workerRepository;
-    ProductionLineRepository productionLineRepository;
+    private final WorkerRepository workerRepository;
+    private final ProductionLineRepository productionLineRepository;
 
     @Override
     public List<WorkerResource> getAll() {
@@ -32,7 +32,14 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public WorkerResource save(WorkerResource worker) {
         Worker workerToSave = WORKER_MAPPER.fromWorkerResource(worker);
-        workerToSave.setProductionLine(productionLineRepository.getReferenceByName(worker.getProductionLine()));
+
+        productionLineRepository.getProductionLineByName(workerToSave.getProductionLine().getName())
+                .ifPresentOrElse(
+                        workerToSave::setProductionLine,
+                        () -> {
+                            throw new RuntimeException("Production line not found");
+                        }
+                );
 
         return WORKER_MAPPER.toWorkerResource(workerRepository.save(workerToSave));
     }
