@@ -10,4 +10,5 @@ public interface StorageService {
     StorageResource save(StorageResource storage);
     StorageResource update(StorageResource storage, long id);
     void delete(Long id);
+    StorageResource addMaterial(long id, long materialId);
 }

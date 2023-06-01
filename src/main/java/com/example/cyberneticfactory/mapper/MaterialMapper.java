@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = {StorageMapper.class, PartMapper.class})
+@Mapper
 public interface MaterialMapper {
 
     MaterialMapper MATERIAL_MAPPER = Mappers.getMapper(MaterialMapper.class);

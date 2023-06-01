@@ -53,6 +53,16 @@ public class StorageServiceImpl implements StorageService {
         storageRepository.deleteById(id);
     }
 
+    @Override
+    public StorageResource addMaterial(long id, long materialId) {
+        Storage storage = storageRepository.getReferenceById(id);
+        Material material = materialRepository.getReferenceById(materialId);
+
+        storage.getMaterials().add(material);
+
+        return STORAGE_MAPPER.toStorageResource(storageRepository.save(storage));
+    }
+
     private void removeStorageFromMaterial(Material material, Long id) {
         material.getStorages().removeIf(storage -> storage.getId().equals(id));
         materialRepository.save(material);

@@ -17,7 +17,7 @@ import static com.example.cyberneticfactory.mapper.ProductionLineMapper.PRODUCTI
 
 @Service
 @RequiredArgsConstructor
-public class ProductLineServiceImpl implements ProductionLineService {
+public class ProductionLineServiceImpl implements ProductionLineService {
     private final ProductionLineRepository productionLineRepository;
     private final WorkerRepository workerRepository;
     private final MachineRepository machineRepository;
@@ -64,7 +64,7 @@ public class ProductLineServiceImpl implements ProductionLineService {
             machineRepository.save(machine);
         });
 
-        Product product = productRepository.findByProductionLineId(id);
+        Product product = productRepository.findByProductionLine_Id(id);
         product.setProductionLine(null);
         productRepository.save(product);
 

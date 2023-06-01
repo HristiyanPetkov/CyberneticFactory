@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-        ProductionLine productionLine =  productionLineRepository.findByProductId(id);
+        ProductionLine productionLine =  productionLineRepository.findByProduct_Id(id);
         productionLine.setProduct(null);
         productionLineRepository.save(productionLine);
 

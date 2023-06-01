@@ -59,6 +59,16 @@ public class PartServiceImpl implements PartService {
         partRepository.deleteById(id);
     }
 
+    @Override
+    public PartResource addMaterial(long id, long materialId) {
+        Part part = partRepository.getReferenceById(id);
+        Material material = materialRepository.getReferenceById(materialId);
+
+        part.getMaterials().add(material);
+
+        return PART_MAPPER.toPartResource(partRepository.save(part));
+    }
+
     private void removePartFromMaterial(Material material, long id) {
         material.getParts().removeIf(part -> part.getId().equals(id));
         materialRepository.save(material);
