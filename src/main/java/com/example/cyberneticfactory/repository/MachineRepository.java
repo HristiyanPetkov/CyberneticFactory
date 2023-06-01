@@ -10,5 +10,5 @@ import java.util.List;
 public interface MachineRepository extends JpaRepository<Machine, Long> {
     List<Machine> findAllByPartId(Long id);
 
-    Machine findByProductionLineId(Long id);
+    List<Machine> findAllByProductionLineId(Long id);
 }

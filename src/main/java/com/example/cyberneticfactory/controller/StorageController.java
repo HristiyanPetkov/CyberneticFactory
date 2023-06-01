@@ -26,7 +26,7 @@ public class StorageController {
     public ResponseEntity<?> create(@RequestBody StorageResource resource) {
         StorageResource saved = service.save(resource);
         return ResponseEntity.created(
-                UriComponentsBuilder.fromPath("api/v1/Storages/{id}")
+                UriComponentsBuilder.fromPath("api/v1/storages/{id}")
                         .buildAndExpand(saved.getId())
                         .toUri()
         ).body(saved);

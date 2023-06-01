@@ -1,10 +1,8 @@
 package com.example.cyberneticfactory.service.impl;
 
 import com.example.cyberneticfactory.controller.resources.ProductionLineResource;
-import com.example.cyberneticfactory.entity.Machine;
 import com.example.cyberneticfactory.entity.Product;
 import com.example.cyberneticfactory.entity.ProductionLine;
-import com.example.cyberneticfactory.entity.Worker;
 import com.example.cyberneticfactory.repository.MachineRepository;
 import com.example.cyberneticfactory.repository.ProductRepository;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
@@ -56,13 +54,15 @@ public class ProductLineServiceImpl implements ProductionLineService {
 
     @Override
     public void delete(Long id) {
-        Worker worker = workerRepository.findByProductionLineId(id);
-        worker.setProductionLine(null);
-        workerRepository.save(worker);
+        workerRepository.findAllByProductionLineId(id).forEach(worker -> {
+            worker.setProductionLine(null);
+            workerRepository.save(worker);
+        });
 
-        Machine machine = machineRepository.findByProductionLineId(id);
-        machine.setProductionLine(null);
-        machineRepository.save(machine);
+        machineRepository.findAllByProductionLineId(id).forEach(machine -> {
+            machine.setProductionLine(null);
+            machineRepository.save(machine);
+        });
 
         Product product = productRepository.findByProductionLineId(id);
         product.setProductionLine(null);

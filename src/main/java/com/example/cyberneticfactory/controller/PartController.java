@@ -26,7 +26,7 @@ public class PartController {
     public ResponseEntity<?> create(@RequestBody PartResource resource) {
         PartResource saved = service.save(resource);
         return ResponseEntity.created(
-                UriComponentsBuilder.fromPath("api/v1/Parts/{id}")
+                UriComponentsBuilder.fromPath("api/v1/parts/{id}")
                         .buildAndExpand(saved.getId())
                         .toUri()
         ).body(saved);

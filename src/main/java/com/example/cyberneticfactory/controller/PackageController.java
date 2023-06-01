@@ -26,7 +26,7 @@ public class PackageController {
     public ResponseEntity<?> create(@RequestBody PackageResource resource) {
         PackageResource saved = service.save(resource);
         return ResponseEntity.created(
-                UriComponentsBuilder.fromPath("api/v1/Packages/{id}")
+                UriComponentsBuilder.fromPath("api/v1/packages/{id}")
                         .buildAndExpand(saved.getId())
                         .toUri()
         ).body(saved);
@@ -35,6 +35,11 @@ public class PackageController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable long id, @RequestBody PackageResource resource) {
         return ResponseEntity.ok(service.update(resource, id));
+    }
+
+    @PutMapping("/{id}/addProduct/{productId}")
+    public ResponseEntity<?> addProduct(@PathVariable long id, @PathVariable long productId) {
+        return ResponseEntity.ok(service.addProduct(id, productId));
     }
 
     @DeleteMapping("/{id}")

@@ -26,7 +26,7 @@ public class WorkerController {
     public ResponseEntity<?> create(@RequestBody WorkerResource resource) {
         WorkerResource saved = service.save(resource);
         return ResponseEntity.created(
-                UriComponentsBuilder.fromPath("api/v1/Workers/{id}")
+                UriComponentsBuilder.fromPath("api/v1/workers/{id}")
                         .buildAndExpand(saved.getId())
                         .toUri()
         ).body(saved);

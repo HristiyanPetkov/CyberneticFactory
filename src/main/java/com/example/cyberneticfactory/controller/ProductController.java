@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("api/v1/Products")
+@RequestMapping("api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService service;
@@ -26,7 +26,7 @@ public class ProductController {
     public ResponseEntity<?> create(@RequestBody ProductResource resource) {
         ProductResource saved = service.save(resource);
         return ResponseEntity.created(
-                UriComponentsBuilder.fromPath("api/v1/Products/{id}")
+                UriComponentsBuilder.fromPath("api/v1/products/{id}")
                         .buildAndExpand(saved.getId())
                         .toUri()
         ).body(saved);

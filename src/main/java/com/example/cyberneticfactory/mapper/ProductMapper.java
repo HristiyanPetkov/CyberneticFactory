@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = {PackageMapper.class})
+@Mapper
 public interface ProductMapper {
 
     ProductMapper PRODUCT_MAPPER = Mappers.getMapper(ProductMapper.class);

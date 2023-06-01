@@ -53,6 +53,17 @@ public class PackageServiceImpl implements PackageService {
         packageRepository.deleteById(id);
     }
 
+    @Override
+    public PackageResource addProduct(long id, long productId) {
+        Package aPackage = packageRepository.getReferenceById(id);
+        Product product = productRepository.getReferenceById(productId);
+
+        aPackage.getProducts().add(product);
+        product.getPackages().add(aPackage);
+
+        return PACKAGE_MAPPER.toPackageResource(packageRepository.save(aPackage));
+    }
+
     private void removePackageFromProduct(Product product, long id) {
         product.getPackages().removeIf(aPackage -> aPackage.getId().equals(id));
         productRepository.save(product);

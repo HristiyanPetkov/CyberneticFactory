@@ -26,7 +26,7 @@ public class ProductionLineController {
     public ResponseEntity<?> create(@RequestBody ProductionLineResource resource) {
         ProductionLineResource saved = service.save(resource);
         return ResponseEntity.created(
-                UriComponentsBuilder.fromPath("api/v1/ProductionLines/{id}")
+                UriComponentsBuilder.fromPath("api/v1/productionLines/{id}")
                         .buildAndExpand(saved.getId())
                         .toUri()
         ).body(saved);
