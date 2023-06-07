@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
+import java.util.Date;
+
 @Entity
 @Data
 public class Worker {
@@ -17,8 +19,8 @@ public class Worker {
     private int salary;
     private int hours;
     private int days;
-    private int StartDate;
-    private int EndDate;
+    private Date StartDate;
+    private Date EndDate;
     
     @ManyToOne
     private ProductionLine productionLine;

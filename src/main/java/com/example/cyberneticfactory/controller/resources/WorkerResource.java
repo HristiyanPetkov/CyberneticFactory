@@ -2,6 +2,8 @@ package com.example.cyberneticfactory.controller.resources;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class WorkerResource {
     private Long id;
@@ -9,7 +11,7 @@ public class WorkerResource {
     private int salary;
     private int hours;
     private int days;
-    private int StartDate;
-    private int EndDate;
+    private Date startDate;
+    private Date endDate;
     private String productionLine;
 }
