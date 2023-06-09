@@ -1,6 +1,7 @@
 package com.example.cyberneticfactory.service.impl;
 
 import com.example.cyberneticfactory.controller.resources.PackageResource;
+import com.example.cyberneticfactory.controller.resources.ProductResource;
 import com.example.cyberneticfactory.entity.Package;
 import com.example.cyberneticfactory.entity.Product;
 import com.example.cyberneticfactory.repository.PackageRepository;
@@ -30,19 +31,22 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public PackageResource save(PackageResource aPackage) {
-        Package aPackageToSave = PACKAGE_MAPPER.fromPackageResource(aPackage);
-        aPackageToSave.setProducts(null);
+    public PackageResource save(PackageResource packageResource) {
+        Package aPackageToSave = PACKAGE_MAPPER.fromPackageResource(packageResource);
+        aPackageToSave.setProducts(productRepository.findAllById(
+                packageResource.getProducts().stream().map(ProductResource::getId).toList()));
 
         return PACKAGE_MAPPER.toPackageResource(packageRepository.save(aPackageToSave));
     }
 
     @Override
-    public PackageResource update(PackageResource aPackage, long id) {
+    public PackageResource update(PackageResource packageResource, long id) {
         Package aPackageToUpdate = packageRepository.getReferenceById(id);
-        aPackageToUpdate.setName(aPackage.getName());
-        aPackageToUpdate.setPrice(aPackage.getPrice());
-        aPackageToUpdate.setDate(aPackage.getDate());
+        aPackageToUpdate.setName(packageResource.getName());
+        aPackageToUpdate.setPrice(packageResource.getPrice());
+        aPackageToUpdate.setDate(packageResource.getDate());
+        aPackageToUpdate.setProducts(productRepository.findAllById(
+                packageResource.getProducts().stream().map(ProductResource::getId).toList()));
 
         return PACKAGE_MAPPER.toPackageResource(packageRepository.save(aPackageToUpdate));
     }
@@ -51,17 +55,6 @@ public class PackageServiceImpl implements PackageService {
     public void delete(Long id) {
         productRepository.findAllByPackages_Id(id).forEach(product -> removePackageFromProduct(product, id));
         packageRepository.deleteById(id);
-    }
-
-    @Override
-    public PackageResource addProduct(long id, long productId) {
-        Package aPackage = packageRepository.getReferenceById(id);
-        Product product = productRepository.getReferenceById(productId);
-
-        aPackage.getProducts().add(product);
-        product.getPackages().add(aPackage);
-
-        return PACKAGE_MAPPER.toPackageResource(packageRepository.save(aPackage));
     }
 
     private void removePackageFromProduct(Product product, long id) {

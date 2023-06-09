@@ -2,8 +2,6 @@ package com.example.cyberneticfactory.service.impl;
 
 import com.example.cyberneticfactory.controller.resources.MachineResource;
 import com.example.cyberneticfactory.entity.Machine;
-import com.example.cyberneticfactory.entity.Part;
-import com.example.cyberneticfactory.entity.ProductionLine;
 import com.example.cyberneticfactory.repository.MachineRepository;
 import com.example.cyberneticfactory.repository.PartRepository;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
@@ -66,14 +64,6 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public void delete(Long id) {
-        ProductionLine productionLine = productionLineRepository.findByMachines_Id(id);
-        productionLine.getMachines().removeIf(machine -> machine.getId().equals(id));
-        productionLineRepository.save(productionLine);
-
-        Part part = partRepository.findByMachines_Id(id);
-        part.getMachines().removeIf(machine -> machine.getId().equals(id));
-        partRepository.save(part);
-
         machineRepository.deleteById(id);
     }
 }

@@ -10,5 +10,4 @@ public interface PackageService {
     PackageResource save(PackageResource aPackage);
     PackageResource update(PackageResource aPackage, long id);
     void delete(Long id);
-    PackageResource addProduct(long id, long productId);
 }

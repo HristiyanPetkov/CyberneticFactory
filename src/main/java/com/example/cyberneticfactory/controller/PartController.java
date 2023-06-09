@@ -37,11 +37,6 @@ public class PartController {
         return ResponseEntity.ok(service.update(resource, id));
     }
 
-    @PutMapping("/{id}/addMaterial/{materialId}")
-    public ResponseEntity<?> addMaterial(@PathVariable long id, @PathVariable long materialId) {
-        return ResponseEntity.ok(service.addMaterial(id, materialId));
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
         service.delete(id);

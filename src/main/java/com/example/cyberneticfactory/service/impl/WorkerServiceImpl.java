@@ -1,7 +1,6 @@
 package com.example.cyberneticfactory.service.impl;
 
 import com.example.cyberneticfactory.controller.resources.WorkerResource;
-import com.example.cyberneticfactory.entity.ProductionLine;
 import com.example.cyberneticfactory.entity.Worker;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
 import com.example.cyberneticfactory.repository.WorkerRepository;
@@ -59,10 +58,6 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public void delete(Long id) {
-        ProductionLine productionLine = productionLineRepository.findByWorkers_Id(id);
-        productionLine.getWorkers().removeIf(worker -> worker.getId().equals(id));
-        productionLineRepository.save(productionLine);
-
         workerRepository.deleteById(id);
     }
 }

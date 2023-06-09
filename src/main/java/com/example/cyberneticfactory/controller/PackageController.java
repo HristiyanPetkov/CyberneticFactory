@@ -37,11 +37,6 @@ public class PackageController {
         return ResponseEntity.ok(service.update(resource, id));
     }
 
-    @PutMapping("/{id}/addProduct/{productId}")
-    public ResponseEntity<?> addProduct(@PathVariable long id, @PathVariable long productId) {
-        return ResponseEntity.ok(service.addProduct(id, productId));
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
         service.delete(id);

@@ -10,5 +10,4 @@ public interface PartService {
     PartResource save(PartResource part);
     PartResource update(PartResource part, long id);
     void delete(Long id);
-    PartResource addMaterial(long id, long materialId);
 }

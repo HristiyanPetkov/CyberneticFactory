@@ -1,5 +1,6 @@
 package com.example.cyberneticfactory.service.impl;
 
+import com.example.cyberneticfactory.controller.resources.MaterialResource;
 import com.example.cyberneticfactory.controller.resources.StorageResource;
 import com.example.cyberneticfactory.entity.Material;
 import com.example.cyberneticfactory.entity.Storage;
@@ -32,7 +33,8 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public StorageResource save(StorageResource storage) {
         Storage storageToSave = STORAGE_MAPPER.fromStorageResource(storage);
-        storageToSave.setMaterials(null);
+        storageToSave.setMaterials(materialRepository.findAllById(
+                storage.getMaterials().stream().map(MaterialResource::getId).toList()));
 
         return STORAGE_MAPPER.toStorageResource(storageRepository.save(storageToSave));
     }
@@ -43,6 +45,8 @@ public class StorageServiceImpl implements StorageService {
         storageToUpdate.setName(storage.getName());
         storageToUpdate.setCapacity(storage.getCapacity());
         storageToUpdate.setUsed(storage.getUsed());
+        storageToUpdate.setMaterials(materialRepository.findAllById(
+                storage.getMaterials().stream().map(MaterialResource::getId).toList()));
 
         return STORAGE_MAPPER.toStorageResource(storageRepository.save(storageToUpdate));
     }
@@ -51,16 +55,6 @@ public class StorageServiceImpl implements StorageService {
     public void delete(Long id) {
         materialRepository.findAllByStorages_Id(id).forEach(material -> removeStorageFromMaterial(material, id));
         storageRepository.deleteById(id);
-    }
-
-    @Override
-    public StorageResource addMaterial(long id, long materialId) {
-        Storage storage = storageRepository.getReferenceById(id);
-        Material material = materialRepository.getReferenceById(materialId);
-
-        storage.getMaterials().add(material);
-
-        return STORAGE_MAPPER.toStorageResource(storageRepository.save(storage));
     }
 
     private void removeStorageFromMaterial(Material material, Long id) {

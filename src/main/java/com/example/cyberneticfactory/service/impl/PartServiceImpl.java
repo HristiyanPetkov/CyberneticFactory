@@ -1,5 +1,6 @@
 package com.example.cyberneticfactory.service.impl;
 
+import com.example.cyberneticfactory.controller.resources.MaterialResource;
 import com.example.cyberneticfactory.controller.resources.PartResource;
 import com.example.cyberneticfactory.entity.Machine;
 import com.example.cyberneticfactory.entity.Material;
@@ -38,8 +39,9 @@ public class PartServiceImpl implements PartService {
         partToSave.setName(part.getName());
         partToSave.setType(part.getType());
         partToSave.setMachines(null);
-        partToSave.setMaterials(null);
-
+        partToSave.setMaterials(materialRepository.findAllById(
+                part.getMaterials().stream().map(MaterialResource::getId).toList()));
+        
         return PART_MAPPER.toPartResource(partRepository.save(partToSave));
     }
 
@@ -48,6 +50,8 @@ public class PartServiceImpl implements PartService {
         Part partToUpdate = partRepository.getReferenceById(id);
         partToUpdate.setName(part.getName());
         partToUpdate.setType(part.getType());
+        partToUpdate.setMaterials(materialRepository.findAllById(
+                part.getMaterials().stream().map(MaterialResource::getId).toList()));
 
         return PART_MAPPER.toPartResource(partRepository.save(partToUpdate));
     }
@@ -57,16 +61,6 @@ public class PartServiceImpl implements PartService {
         machineRepository.findAllByPartId(id).forEach(this::removePartFromMachine);
         materialRepository.findAllByParts_id(id).forEach(material -> removePartFromMaterial(material, id));
         partRepository.deleteById(id);
-    }
-
-    @Override
-    public PartResource addMaterial(long id, long materialId) {
-        Part part = partRepository.getReferenceById(id);
-        Material material = materialRepository.getReferenceById(materialId);
-
-        part.getMaterials().add(material);
-
-        return PART_MAPPER.toPartResource(partRepository.save(part));
     }
 
     private void removePartFromMaterial(Material material, long id) {

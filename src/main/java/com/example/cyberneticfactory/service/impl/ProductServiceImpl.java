@@ -3,7 +3,6 @@ package com.example.cyberneticfactory.service.impl;
 import com.example.cyberneticfactory.controller.resources.ProductResource;
 import com.example.cyberneticfactory.entity.Package;
 import com.example.cyberneticfactory.entity.Product;
-import com.example.cyberneticfactory.entity.ProductionLine;
 import com.example.cyberneticfactory.repository.PackageRepository;
 import com.example.cyberneticfactory.repository.ProductRepository;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
@@ -62,10 +61,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-        ProductionLine productionLine =  productionLineRepository.findByProduct_Id(id);
-        productionLine.setProduct(null);
-        productionLineRepository.save(productionLine);
-
         packageRepository.findAllByProducts_Id(id).forEach(aPackage -> removeProductFromPackage(aPackage, id));
         productRepository.deleteById(id);
     }

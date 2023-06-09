@@ -1,7 +1,6 @@
 package com.example.cyberneticfactory.service.impl;
 
 import com.example.cyberneticfactory.controller.resources.ProductionLineResource;
-import com.example.cyberneticfactory.entity.Product;
 import com.example.cyberneticfactory.entity.ProductionLine;
 import com.example.cyberneticfactory.repository.MachineRepository;
 import com.example.cyberneticfactory.repository.ProductRepository;
@@ -63,10 +62,6 @@ public class ProductionLineServiceImpl implements ProductionLineService {
             machine.setProductionLine(null);
             machineRepository.save(machine);
         });
-
-        Product product = productRepository.findByProductionLine_Id(id);
-        product.setProductionLine(null);
-        productRepository.save(product);
 
         productionLineRepository.deleteById(id);
     }
