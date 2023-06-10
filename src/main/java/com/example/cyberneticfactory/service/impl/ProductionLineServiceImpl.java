@@ -7,6 +7,7 @@ import com.example.cyberneticfactory.repository.ProductRepository;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
 import com.example.cyberneticfactory.repository.WorkerRepository;
 import com.example.cyberneticfactory.service.ProductionLineService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,7 @@ public class ProductionLineServiceImpl implements ProductionLineService {
     @Override
     public ProductionLineResource save(ProductionLineResource productionLine) {
         ProductionLine productionLineToSave = PRODUCTION_LINE_MAPPER.fromProductionLineResource(productionLine);
-        productionLineToSave.setWorkers(null);
-        productionLineToSave.setMachines(null);
-        productionLineToSave.setProduct(productRepository.getReferenceByName(productionLine.getProduct()));
+        productionLineToSave.setProduct(null);
 
         return PRODUCTION_LINE_MAPPER.toProductionLineResource(productionLineRepository.save(productionLineToSave));
     }
@@ -47,6 +46,13 @@ public class ProductionLineServiceImpl implements ProductionLineService {
         ProductionLine productionLineToUpdate = productionLineRepository.getReferenceById(id);
         productionLineToUpdate.setName(productionLine.getName());
         productionLineToUpdate.setProduction_rate(productionLine.getProduction_rate());
+        productRepository.getProductByName(productionLine.getProduct())
+                .ifPresentOrElse(
+                        productionLineToUpdate::setProduct,
+                        () -> {
+                            throw new EntityNotFoundException("Product not found");
+                        }
+                );
 
         return PRODUCTION_LINE_MAPPER.toProductionLineResource(productionLineRepository.save(productionLineToUpdate));
     }

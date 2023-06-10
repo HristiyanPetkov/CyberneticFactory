@@ -41,7 +41,7 @@ public class PartServiceImpl implements PartService {
         partToSave.setMachines(null);
         partToSave.setMaterials(materialRepository.findAllById(
                 part.getMaterials().stream().map(MaterialResource::getId).toList()));
-        
+
         return PART_MAPPER.toPartResource(partRepository.save(partToSave));
     }
 

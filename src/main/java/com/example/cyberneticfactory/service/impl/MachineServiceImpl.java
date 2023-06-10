@@ -58,6 +58,21 @@ public class MachineServiceImpl implements MachineService {
         Machine machineToUpdate = machineRepository.getReferenceById(id);
         machineToUpdate.setName(machine.getName());
         machineToUpdate.setProduction_rate(machine.getProduction_rate());
+        partRepository.getPartsByName(machine.getPart())
+                .ifPresentOrElse(
+                        machineToUpdate::setPart,
+                        () -> {
+                            throw new EntityNotFoundException("Part not found");
+                        }
+                );
+
+        productionLineRepository.getProductionLineByName(machine.getProductionLine())
+                .ifPresentOrElse(
+                        machineToUpdate::setProductionLine,
+                        () -> {
+                            throw new EntityNotFoundException("Production line not found");
+                        }
+                );
 
         return MACHINE_MAPPER.toMachineResource(machineRepository.save(machineToUpdate));
     }

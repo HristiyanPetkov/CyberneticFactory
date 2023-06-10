@@ -55,6 +55,13 @@ public class ProductServiceImpl implements ProductService {
         productToUpdate.setPrice(product.getPrice());
         productToUpdate.setType(product.getType());
         productToUpdate.setDescription(product.getDescription());
+        productionLineRepository.getProductionLineByName(product.getProductionLine())
+                .ifPresentOrElse(
+                        productToUpdate::setProductionLine,
+                        () -> {
+                            throw new EntityNotFoundException("Production line not found");
+                        }
+                );
 
         return PRODUCT_MAPPER.toProductResource(productRepository.save(productToUpdate));
     }

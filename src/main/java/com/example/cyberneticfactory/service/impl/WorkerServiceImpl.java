@@ -5,6 +5,7 @@ import com.example.cyberneticfactory.entity.Worker;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
 import com.example.cyberneticfactory.repository.WorkerRepository;
 import com.example.cyberneticfactory.service.WorkerService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class WorkerServiceImpl implements WorkerService {
                 .ifPresentOrElse(
                         workerToSave::setProductionLine,
                         () -> {
-                            throw new RuntimeException("Production line not found");
+                            throw new EntityNotFoundException("Production line not found");
                         }
                 );
 
@@ -52,6 +53,13 @@ public class WorkerServiceImpl implements WorkerService {
         workerToUpdate.setDays(worker.getDays());
         workerToUpdate.setStartDate(worker.getStartDate());
         workerToUpdate.setEndDate(worker.getEndDate());
+        productionLineRepository.getProductionLineByName(worker.getProductionLine())
+                .ifPresentOrElse(
+                        workerToUpdate::setProductionLine,
+                        () -> {
+                            throw new EntityNotFoundException("Production line not found");
+                        }
+                );
 
         return WORKER_MAPPER.toWorkerResource(workerRepository.save(workerToUpdate));
     }
