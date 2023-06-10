@@ -8,11 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ProductionLineRepository extends JpaRepository<ProductionLine, Long> {
-    ProductionLine findByProduct_Id(Long id);
-
-    ProductionLine findByWorkers_Id(long id);
-
-    ProductionLine findByMachines_Id(Long id);
-
     Optional<ProductionLine> getProductionLineByName(String productionLine);
 }
