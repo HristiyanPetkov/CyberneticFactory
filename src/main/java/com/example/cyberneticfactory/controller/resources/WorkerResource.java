@@ -2,6 +2,7 @@ package com.example.cyberneticfactory.controller.resources;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -14,4 +15,5 @@ public class WorkerResource {
     private Date startDate;
     private Date endDate;
     private String productionLine;
+    private Timestamp createdDate;
 }

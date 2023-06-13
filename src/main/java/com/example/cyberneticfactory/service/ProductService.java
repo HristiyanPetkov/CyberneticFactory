@@ -10,4 +10,6 @@ public interface ProductService {
     ProductResource save(ProductResource product);
     ProductResource update(ProductResource product, long id);
     void delete(Long id);
+
+    Object getAudits();
 }

@@ -42,4 +42,9 @@ public class StorageController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/audits")
+    public ResponseEntity<?> getAudits() {
+        return ResponseEntity.ok(service.getAudits());
+    }
 }

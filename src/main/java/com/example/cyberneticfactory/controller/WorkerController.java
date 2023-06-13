@@ -42,4 +42,19 @@ public class WorkerController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/audits")
+    public ResponseEntity<?> getAudits() {
+        return ResponseEntity.ok(service.getAudits());
+    }
+
+    @GetMapping("/{id}/audits")
+    public ResponseEntity<?> getAuditsById(@PathVariable long id) {
+        return ResponseEntity.ok(service.getAuditsById(id));
+    }
+
+    @GetMapping("/byDate")
+    public ResponseEntity<?> getAuditsByDate(@RequestParam String date) {
+        return ResponseEntity.ok(service.getAuditsByDate(date));
+    }
 }

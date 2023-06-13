@@ -5,10 +5,15 @@ import com.example.cyberneticfactory.entity.Worker;
 import com.example.cyberneticfactory.repository.ProductionLineRepository;
 import com.example.cyberneticfactory.repository.WorkerRepository;
 import com.example.cyberneticfactory.service.WorkerService;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.example.cyberneticfactory.mapper.WorkerMapper.WORKER_MAPPER;
@@ -18,6 +23,7 @@ import static com.example.cyberneticfactory.mapper.WorkerMapper.WORKER_MAPPER;
 public class WorkerServiceImpl implements WorkerService {
     private final WorkerRepository workerRepository;
     private final ProductionLineRepository productionLineRepository;
+    private final EntityManagerFactory entityManagerFactory;
 
     @Override
     public List<WorkerResource> getAll() {
@@ -67,5 +73,47 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public void delete(Long id) {
         workerRepository.deleteById(id);
+    }
+
+    @Override
+    public Object getAudits() {
+        AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
+        return auditReader.createQuery()
+                .forRevisionsOfEntity(Worker.class, true, true)
+                .getResultList();
+    }
+
+    @Override
+    public Object getAuditsById(long id) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
+        return auditReader.createQuery()
+                .forRevisionsOfEntity(Worker.class, true, true)
+                .add(AuditEntity.id().eq(id))
+                .getResultList();
+    }
+
+    @Override
+    public Object getAuditsByDate(String date) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
+
+        List<?> revisions = auditReader.createQuery()
+                .forRevisionsOfEntity(Worker.class, true, true)
+                .getResultList();
+
+        Object ret_val = null;
+
+        for (Object revision : revisions) {
+
+            if (((Worker) revision).getCreatedDate() == null) {
+                break;
+            }
+
+            if (((Worker) revision).getCreatedDate().before(Timestamp.valueOf(date))
+                    || ((Worker) revision).getCreatedDate().equals(Timestamp.valueOf(date))) {
+                ret_val = revision;
+            }
+        }
+
+        return ret_val;
     }
 }

@@ -10,4 +10,7 @@ public interface WorkerService {
     WorkerResource save(WorkerResource worker);
     WorkerResource update(WorkerResource worker, long id);
     void delete(Long id);
+    Object getAudits();
+    Object getAuditsById(long id);
+    Object getAuditsByDate(String date);
 }
