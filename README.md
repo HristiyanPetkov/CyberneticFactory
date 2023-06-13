@@ -32,7 +32,7 @@
 За да се стартира проектът локално, трябва да се изпълнят следните стъпки:
 1. Клониране на репозиторито
 ```sh
-git clone 
+git clone https://github.com/HristiyanPetkov/CyberneticFactory.git
 ```
 2. Създаване на база данни в MySQL Workbench
 3. Конфигуриране на application.properties файла
@@ -42,7 +42,7 @@ git clone
 За да се хоства проектът чрез Microsoft Azure, трябва да се изпълнят следните стъпки:
 1. Клониране на репозиторито
 ```sh
-git clone 
+git clone https://github.com/HristiyanPetkov/CyberneticFactory.git
 ```
 2. Създаване на remote database в Azure
 3. Създаване на нов spring web app в Azure
