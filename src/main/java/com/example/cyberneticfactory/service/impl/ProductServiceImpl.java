@@ -14,6 +14,7 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.example.cyberneticfactory.mapper.ProductMapper.PRODUCT_MAPPER;
@@ -28,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResource> getAll() {
-        return PRODUCT_MAPPER.toProductResources(productRepository.findAll());
+        return PRODUCT_MAPPER.toProductResources(productRepository.findAllByValidFromBefore(new Timestamp(System.currentTimeMillis())));
     }
 
     @Override

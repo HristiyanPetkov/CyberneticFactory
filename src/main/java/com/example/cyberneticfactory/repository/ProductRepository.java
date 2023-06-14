@@ -4,6 +4,7 @@ import com.example.cyberneticfactory.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,4 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByPackages_Id(Long id);
 
     Optional<Product> getProductByName(String product);
+
+    List<Product> findAllByValidFromBefore(Timestamp timestamp);
 }
