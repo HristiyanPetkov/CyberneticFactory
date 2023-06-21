@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: factoryapi
+  name: factoryapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: factoryapi
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: factoryapi
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: factoryapi
+          image: sylse/dockerhub:factoryapi
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: factoryapi
+  name: factoryapi
+spec:
+  selector:
+    app: factoryapi
+  ports:
+    - name: 8080-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: factoryapi-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: factoryapi
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75
